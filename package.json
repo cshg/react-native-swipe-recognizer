@@ -1,0 +1,30 @@
+{
+  "name": "react-native-swipe-recognizer",
+  "version": "0.1.0",
+  "description": "A simple, configurable swipe recognizer using the react-native gesture responder system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowkey/react-native-swipe-recognizer.git"
+  },
+  "keywords": [
+    "react-native",
+    "swipe",
+    "gesture",
+    "recognizer"
+  ],
+  "author": "flowkey.com",
+  "contributors": [
+    {
+      "name": "Christian Haug"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flowkey/react-native-swipe-recognizer/issues"
+  },
+  "homepage": "https://github.com/flowkey/react-native-swipe-recognizer#readme"
+}
