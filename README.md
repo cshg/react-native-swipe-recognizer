@@ -53,3 +53,57 @@ class App extends React.Component {
   }
 }
 ```
+
+## Custom Options Example
+
+To pass in custom minimum distance and speed for swipes simply define an options object with two properties:
+- minimumSwipeDistance (the default value is 30)
+- minimumSwipeSpeed (the default value is 0.1)
+
+```JavaScript
+const options = {
+    minimumSwipeDistance: 100,
+    minimumSwipeSpeed: 0.01,
+};
+```
+
+And pass it as the third argument to the SwipeRecognizer constructor in `onPanResponderRelease`:
+```JavaScript
+const swipe = new SwipeRecognizer(e, gestureState, options);
+```
+
+Full example with custom options:
+
+```JavaScript
+import React from 'react';
+import { View, Text, PanResponder } from 'react-native';
+import SwipeRecognizer from 'react-native-swipe-recognizer';
+
+class App extends React.Component {
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: (e, gestureState) => {
+        const swipe = new SwipeRecognizer(e, gestureState);
+        return swipe.isHorizontalSwipe();
+      },
+      onPanResponderRelease: (e, gestureState) => {
+        const options = {
+            minimumSwipeDistance: 100,
+            minimumSwipeSpeed: 0.01,
+        };
+        const swipe = new SwipeRecognizer(e, gestureState, options);
+        if (swipe.isRightSwipe()) console.log('long right swipe recognized!');
+        if (swipe.isLeftSwipe()) console.log('long left swipe recognized!');
+      },
+    });
+  }
+
+  render() {
+    return (
+      <View { ...this._panResponder.panHandlers }>
+        <Text>This view recognizes left and right swipes</Text>
+      </View>
+    );
+  }
+}
+```
