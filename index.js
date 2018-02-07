@@ -1,9 +1,11 @@
-const minimumSwipeDistance = 30;
-const minimumSwipeSpeed = 0.1;
+const defaultOptions = {
+    minimumSwipeDistance: 30,
+    minimumSwipeSpeed: 0.1,
+};
 
 class SwipeRecognizer {
-    constructor(event, gestureState) {
-        Object.assign(this, gestureState);
+    constructor(event, gestureState, options = defaultOptions) {
+        Object.assign(this, gestureState, options);
     }
 
     isHorizontalSwipe() {
@@ -15,31 +17,31 @@ class SwipeRecognizer {
     }
 
     isHorizontallyFastEnough() {
-        return !!(Math.abs(this.vx) > minimumSwipeSpeed);
+        return !!(Math.abs(this.vx) > this.minimumSwipeSpeed);
     }
 
     isVerticallyFastEnough() {
-        return !!(Math.abs(this.vy) > minimumSwipeSpeed);
+        return !!(Math.abs(this.vy) > this.minimumSwipeSpeed);
     }
 
     isRightSwipe() {
         if (!this.isHorizontalSwipe() || !this.isHorizontallyFastEnough()) return false;
-        return !!(this.dx > minimumSwipeDistance);
+        return !!(this.dx > this.minimumSwipeDistance);
     }
 
     isLeftSwipe() {
         if (!this.isHorizontalSwipe() || !this.isHorizontallyFastEnough()) return false;
-        return !!(this.dx < -minimumSwipeDistance);
+        return !!(this.dx < -this.minimumSwipeDistance);
     }
 
     isUpSwipe() {
         if (!this.isVerticalSwipe() || !this.isVerticallyFastEnough()) return false;
-        return !!(this.dy < -minimumSwipeDistance);
+        return !!(this.dy < -this.minimumSwipeDistance);
     }
 
     isDownSwipe() {
         if (!this.isVerticalSwipe() || !this.isVerticallyFastEnough()) return false;
-        return !!(this.dy > minimumSwipeDistance);
+        return !!(this.dy > this.minimumSwipeDistance);
     }
 }
 
