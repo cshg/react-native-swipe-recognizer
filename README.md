@@ -19,3 +19,37 @@ Add the dependency
 ```JavaScript
 <View { ...this._panResponder.panHandlers }>
 ```
+
+## Simple Example
+
+This example sets the panResponder for horizontal swipes and does `console.logs` on right and left swipes:
+
+```JavaScript
+import React from 'react';
+import { View, Text, PanResponder } from 'react-native';
+import SwipeRecognizer from 'react-native-swipe-recognizer';
+
+class App extends React.Component {
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: (e, gestureState) => {
+        const swipe = new SwipeRecognizer(e, gestureState);
+        return swipe.isHorizontalSwipe();
+      },
+      onPanResponderRelease: (e, gestureState) => {
+        const swipe = new SwipeRecognizer(e, gestureState);
+        if (swipe.isRightSwipe()) console.log('right swipe recognized!');
+        if (swipe.isLeftSwipe()) console.log('left swipe recognized!');
+      },
+    });
+  }
+
+  render() {
+    return (
+      <View { ...this._panResponder.panHandlers }>
+        <Text>This view recognizes left and right swipes</Text>
+      </View>
+    );
+  }
+}
+```
