@@ -10,7 +10,7 @@ Add the dependency
 
 ## Usage
 
-1. Create a panResponder on `componentWillMount` with two functions:
+1. Create a panResponder on `componentWillMount` with two functions (see [simple example](#simple-example)):
 - `onMoveShouldSetPanResponder`: this functions returns `true` for all cases in which a panResponder should be set (e.g. all, horizontal, vertical)
 - `onPanResponderRelease`: this function recognizes the actual swipe on release depending on the gesture state (e.g. right, left or up swipe)
 
@@ -46,12 +46,21 @@ class App extends React.Component {
 
   render() {
     return (
-      <View { ...this._panResponder.panHandlers }>
+      <View style={styles.container} { ...this._panResponder.panHandlers }>
         <Text>This view recognizes left and right swipes</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 ```
 
 ## Custom Options Example
@@ -100,10 +109,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <View { ...this._panResponder.panHandlers }>
-        <Text>This view recognizes left and right swipes</Text>
+      <View style={styles.container} { ...this._panResponder.panHandlers }>
+        <Text>This view recognizes long left and right swipes</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 ```
