@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/react-native-swipe-recognizer.svg)](https://badge.fury.io/for/js/react-native-swipe-recognizer)
+
 # react-native-swipe-recognizer
 
 A simple, configurable 4-directional swipe recognizer using the react-native gesture responder system
