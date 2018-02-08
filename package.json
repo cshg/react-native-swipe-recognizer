@@ -1,6 +1,6 @@
 {
   "name": "react-native-swipe-recognizer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple, configurable swipe recognizer using the react-native gesture responder system",
   "main": "index.js",
   "scripts": {

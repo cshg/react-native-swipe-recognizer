@@ -9,16 +9,21 @@ Add the dependency
 - with npm: `npm install --save react-native-swipe-recognizer`
 
 ## Usage
+1. Create an instance of `SwipeRecognizer` in `componentWillMount` (to pass in options see [custom options example](#custom-options-example))
 
-1. Create a panResponder on `componentWillMount` with two functions (see [simple example](#simple-example)):
+2. Create a panResponder with the following two functions (see [simple example](#simple-example)):
 - `onMoveShouldSetPanResponder`: this functions returns `true` for all cases in which a panResponder should be set (e.g. all, horizontal, vertical)
 - `onPanResponderRelease`: this function recognizes the actual swipe on release depending on the gesture state (e.g. right, left or up swipe)
 
-2. Pass the panHandlers to the View
+    Within those functions pass the gestureState to the used swipeRecognizer functions, for example:
+    ```JavaScript
+    swipeRecognizer.isRightSwipe(gestureState);
+    ```
 
-```JavaScript
-<View { ...this._panResponder.panHandlers }>
-```
+3. Within the render function pass the panHandlers to the View:
+    ```JavaScript
+    <View { ...this._panResponder.panHandlers }>
+    ```
 
 ## Simple Example
 
@@ -31,15 +36,14 @@ import SwipeRecognizer from 'react-native-swipe-recognizer';
 
 class App extends React.Component {
   componentWillMount() {
+    const swipeRecognizer = new SwipeRecognizer();
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (e, gestureState) => {
-        const swipe = new SwipeRecognizer(e, gestureState);
-        return swipe.isHorizontalSwipe();
+        return swipeRecognizer.isHorizontalSwipe(gestureState);
       },
       onPanResponderRelease: (e, gestureState) => {
-        const swipe = new SwipeRecognizer(e, gestureState);
-        if (swipe.isRightSwipe()) console.log('right swipe recognized!');
-        if (swipe.isLeftSwipe()) console.log('left swipe recognized!');
+        if (swipeRecognizer.isRightSwipe(gestureState)) console.log('right swipe recognized!');
+        if (swipeRecognizer.isLeftSwipe(gestureState)) console.log('left swipe recognized!');
       },
     });
   }
@@ -76,9 +80,9 @@ const options = {
 };
 ```
 
-And pass it as the third argument to the SwipeRecognizer constructor in `onPanResponderRelease`:
+And pass it as the argument to the SwipeRecognizer constructor in `componentWillMount`:
 ```JavaScript
-const swipe = new SwipeRecognizer(e, gestureState, options);
+const swipe = new SwipeRecognizer(options);
 ```
 
 Full example with custom options:
@@ -90,19 +94,18 @@ import SwipeRecognizer from 'react-native-swipe-recognizer';
 
 class App extends React.Component {
   componentWillMount() {
+    const options = {
+        minimumSwipeDistance: 100,
+        minimumSwipeSpeed: 0.01,
+    };
+    const swipeRecognizer = new SwipeRecognizer(options);
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (e, gestureState) => {
-        const swipe = new SwipeRecognizer(e, gestureState);
-        return swipe.isHorizontalSwipe();
+        return swipeRecognizer.isHorizontalSwipe(gestureState);
       },
       onPanResponderRelease: (e, gestureState) => {
-        const options = {
-            minimumSwipeDistance: 100,
-            minimumSwipeSpeed: 0.01,
-        };
-        const swipe = new SwipeRecognizer(e, gestureState, options);
-        if (swipe.isRightSwipe()) console.log('long right swipe recognized!');
-        if (swipe.isLeftSwipe()) console.log('long left swipe recognized!');
+        if (swipeRecognizer.isRightSwipe(gestureState)) console.log('right swipe recognized!');
+        if (swipeRecognizer.isLeftSwipe(gestureState)) console.log('left swipe recognized!');
       },
     });
   }
@@ -110,7 +113,7 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container} { ...this._panResponder.panHandlers }>
-        <Text>This view recognizes long left and right swipes</Text>
+        <Text>This view recognizes left and right swipes</Text>
       </View>
     );
   }
