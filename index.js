@@ -4,44 +4,44 @@ const defaultOptions = {
 };
 
 class SwipeRecognizer {
-    constructor(event, gestureState, options = defaultOptions) {
-        Object.assign(this, gestureState, options);
+    constructor(options = defaultOptions) {
+        Object.assign(this, options);
     }
 
-    isHorizontalSwipe() {
-        return !!(Math.abs(this.dx) > Math.abs(this.dy));
+    isHorizontalSwipe(gestureState) {
+        return !!(Math.abs(gestureState.dx) > Math.abs(gestureState.dy));
     }
 
-    isVerticalSwipe() {
-        return !this.isHorizontalSwipe();
+    isVerticalSwipe(gestureState) {
+        return !this.isHorizontalSwipe(gestureState);
     }
 
-    isHorizontallyFastEnough() {
-        return !!(Math.abs(this.vx) > this.minimumSwipeSpeed);
+    isHorizontallyFastEnough(gestureState) {
+        return !!(Math.abs(gestureState.vx) > this.minimumSwipeSpeed);
     }
 
-    isVerticallyFastEnough() {
-        return !!(Math.abs(this.vy) > this.minimumSwipeSpeed);
+    isVerticallyFastEnough(gestureState) {
+        return !!(Math.abs(gestureState.vy) > this.minimumSwipeSpeed);
     }
 
-    isRightSwipe() {
-        if (!this.isHorizontalSwipe() || !this.isHorizontallyFastEnough()) return false;
-        return !!(this.dx > this.minimumSwipeDistance);
+    isRightSwipe(gestureState) {
+        if (!this.isHorizontalSwipe(gestureState) || !this.isHorizontallyFastEnough(gestureState)) return false;
+        return !!(gestureState.dx > this.minimumSwipeDistance);
     }
 
-    isLeftSwipe() {
-        if (!this.isHorizontalSwipe() || !this.isHorizontallyFastEnough()) return false;
-        return !!(this.dx < -this.minimumSwipeDistance);
+    isLeftSwipe(gestureState) {
+        if (!this.isHorizontalSwipe(gestureState) || !this.isHorizontallyFastEnough(gestureState)) return false;
+        return !!(gestureState.dx < -this.minimumSwipeDistance);
     }
 
-    isUpSwipe() {
-        if (!this.isVerticalSwipe() || !this.isVerticallyFastEnough()) return false;
-        return !!(this.dy < -this.minimumSwipeDistance);
+    isUpSwipe(gestureState) {
+        if (!this.isVerticalSwipe(gestureState) || !this.isVerticallyFastEnough(gestureState)) return false;
+        return !!(gestureState.dy < -this.minimumSwipeDistance);
     }
 
-    isDownSwipe() {
-        if (!this.isVerticalSwipe() || !this.isVerticallyFastEnough()) return false;
-        return !!(this.dy > this.minimumSwipeDistance);
+    isDownSwipe(gestureState) {
+        if (!this.isVerticalSwipe(gestureState) || !this.isVerticallyFastEnough(gestureState)) return false;
+        return !!(gestureState.dy > this.minimumSwipeDistance);
     }
 }
 
